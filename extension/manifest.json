@@ -1,0 +1,16 @@
+{
+    "name": "BrowserSync",
+    "description": "Keeps your browsers in sync.",
+    "manifest_version": 3,
+    "version": "0.1.0",
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "bookmarks",
+        "storage"
+    ]
+}
