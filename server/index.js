@@ -23,6 +23,10 @@ const bookmarkSchema = new mongoose.Schema({
     bookmarkId: {
         type: Number,
         required: true
+    },
+    removed: {
+        type: Boolean,
+        required: false
     }
 });
 
@@ -78,14 +82,21 @@ app.patch("/bookmarks/:bookmarkId", async (req, res) => {
     res.send("Successfully updated bookmark");
 });
 
-// DESTROY ROUTE
+// REMOVE ROUTE: sets `removed` to `true`
 app.delete("/bookmarks/:bookmarkId", async (req, res) => {
     const { bookmarkId } = req.params;
 
-    await Bookmark.findOneAndDelete({ bookmarkId });
-
-    res.send("Successfully deleted bookmark");
+    await Bookmark.updateOne({ bookmarkId: bookmarkId }, { removed: true });
 });
+
+// // DESTROY ROUTE
+// app.delete("/bookmarks/:bookmarkId", async (req, res) => {
+//     const { bookmarkId } = req.params;
+
+//     await Bookmark.findOneAndDelete({ bookmarkId });
+
+//     res.send("Successfully deleted bookmark");
+// });
 
 // 404 NOT FOUND ROUTE
 app.use("*", (req, res) => {
